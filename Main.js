@@ -15,14 +15,12 @@ function createWindow() {
     }
   });
 
-  // Build ke baad files load karne ka sahi rasta
   win.loadFile(path.join(__dirname, 'dist/index.html')).catch(() => {
-    console.log("Dist folder not found yet");
+    console.log("Loading local file...");
   });
 }
 
 app.whenReady().then(createWindow);
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
