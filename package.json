@@ -21,6 +21,7 @@
   },
   "build": {
     "appId": "com.business.app",
+    "productName": "BusinessManager",
     "directories": {
       "output": "dist_electron"
     },
