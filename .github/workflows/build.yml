@@ -8,15 +8,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Clean Install
-        run: npm install --force
-      - name: Build Web
-        run: npm run build
-      - name: Build EXE
-        run: npx electron-builder --win --portable
+      - run: npm install --force
+      - run: npm run build
+      - run: npx electron-builder --win --portable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v4
         with:
-          name: Business-Software-EXE
+          name: My-Business-App
           path: dist_electron/*.exe
