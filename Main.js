@@ -16,7 +16,7 @@ function createWindow() {
   });
 
   win.loadFile(path.join(__dirname, 'dist/index.html')).catch(() => {
-    console.log("Loading local file...");
+    console.log("Loading error...");
   });
 }
 
