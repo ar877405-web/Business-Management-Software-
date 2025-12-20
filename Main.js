@@ -1,5 +1,9 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -11,9 +15,11 @@ function createWindow() {
     }
   });
 
-  // Ye line check karti hai ke files kahan hain
-  const indexPath = path.join(__dirname, 'dist', 'index.html');
-  win.loadFile(indexPath);
+  // Build ke baad files yahan hoti hain
+  win.loadFile(path.join(__dirname, 'dist/index.html'));
 }
 
 app.whenReady().then(createWindow);
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit();
+});
