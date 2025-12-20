@@ -2,6 +2,7 @@
   "name": "business-management-software",
   "version": "1.0.0",
   "main": "Main.js",
+  "type": "commonjs",
   "scripts": {
     "build": "vite build",
     "dist": "electron-builder"
@@ -13,15 +14,23 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
-    "vite": "^5.4.2",
-    "@vitejs/plugin-react": "^4.3.1"
+    "vite": "^5.4.2"
   },
   "build": {
     "appId": "com.business.app",
-    "directories": { "output": "dist_electron" },
-    "win": { "target": "portable" },
-    "files": [ "dist/**/*", "Main.js", "package.json" ]
+    "directories": {
+      "output": "dist_electron"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "files": [
+      "dist/**/*",
+      "Main.js",
+      "package.json"
+    ]
   }
 }
