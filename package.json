@@ -20,22 +20,13 @@
     "electron-builder": "^24.9.1",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.5.3",
     "vite": "^5.4.2"
   },
   "build": {
     "appId": "com.business.app",
     "productName": "BusinessManager",
-    "directories": {
-      "output": "dist_electron"
-    },
-    "win": {
-      "target": "portable"
-    },
-    "files": [
-      "dist/**/*",
-      "Main.js",
-      "package.json"
-    ]
+    "win": { "target": "portable" },
+    "directories": { "output": "dist_electron" },
+    "files": ["dist/**/*", "Main.js", "package.json"]
   }
 }
