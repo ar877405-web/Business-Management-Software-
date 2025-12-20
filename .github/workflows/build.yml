@@ -6,27 +6,26 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4  # Version 3 ko 4 kar diya
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4 # Version 3 ko 4 kar diya
+        uses: actions/setup-node@v4
         with:
-          node-version: 20 # 18 ko 20 kar diya taake latest rahe
+          node-version: 20
 
       - name: Install Dependencies
-        run: npm install
+        run: npm install --force
 
       - name: Build Web Project
         run: npm run build
 
       - name: Build Electron EXE
-        run: npx electron-builder --win --publish never
+        run: npx electron-builder --win --portable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Software
-        uses: actions/upload-artifact@v4 # Version 3 ko 4 kar diya
+        uses: actions/upload-artifact@v4
         with:
-          name: Business-App-EXE
+          name: Business-Software-EXE
           path: dist/*.exe
-
