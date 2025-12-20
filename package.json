@@ -25,8 +25,8 @@
   "build": {
     "appId": "com.business.app",
     "productName": "BusinessManager",
-    "win": { "target": "portable" },
     "directories": { "output": "dist_electron" },
+    "win": { "target": "portable" },
     "files": ["dist/**/*", "Main.js", "package.json"]
   }
 }
