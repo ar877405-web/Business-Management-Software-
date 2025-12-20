@@ -1,17 +1,31 @@
 name: Build Software
 on: [push]
+
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install --force
-      - run: npm run build
-      - run: npx electron-builder --win --portable
-      - uses: actions/upload-artifact@v4
+
+      - name: Install Dependencies
+        run: npm install --force
+
+      - name: Build Web Project
+        run: npm run build
+
+      - name: Build EXE
+        run: npx electron-builder --win --portable
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: Business-Software
+          name: Business-Software-EXE
           path: dist_electron/*.exe
