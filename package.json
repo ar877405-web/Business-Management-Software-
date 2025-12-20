@@ -2,12 +2,13 @@
   "name": "business-management-software",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "main": "Main.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.37.4",
@@ -21,5 +22,20 @@
     "electron-builder": "^24.9.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.2"
+  },
+  "build": {
+    "appId": "com.business.app",
+    "productName": "BusinessManager",
+    "directories": {
+      "output": "dist_electron"
+    },
+    "win": {
+      "target": "portable"
+    },
+    "files": [
+      "dist/**/*",
+      "Main.js",
+      "package.json"
+    ]
   }
 }
