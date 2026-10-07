@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - openjarvis-apk-build
+  pull_request:
+    branches:
+      - openjarvis-apk-build
   workflow_dispatch:
 
 permissions:
