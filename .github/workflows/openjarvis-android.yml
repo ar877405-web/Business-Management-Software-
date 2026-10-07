@@ -1,0 +1,72 @@
+name: Build OpenJarvis Android APK
+
+on:
+  push:
+    branches:
+      - openjarvis-apk-build
+  pull_request:
+    branches:
+      - openjarvis-apk-build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout build workflow
+        uses: actions/checkout@v4
+
+      - name: Clone OpenJarvis source
+        run: git clone --depth 1 https://github.com/open-jarvis/OpenJarvis.git OpenJarvis
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.0'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0 ndk;27.2.12479018'
+
+      - name: Patch OpenJarvis for Android
+        run: python3 android_patch.py
+
+      - name: Install frontend dependencies
+        working-directory: OpenJarvis/frontend
+        run: npm ci
+
+      - name: Initialize Android project
+        working-directory: OpenJarvis/frontend
+        run: npx tauri android init
+
+      - name: Build Android APK
+        working-directory: OpenJarvis/frontend
+        run: npx tauri android build --apk
+
+      - name: Collect APK
+        run: |
+          mkdir -p dist
+          find OpenJarvis/frontend/src-tauri/gen/android/app/build/outputs/apk -type f -name '*.apk' -exec cp {} dist/OpenJarvis-Android.apk \;
+          test -s dist/OpenJarvis-Android.apk
+
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenJarvis-Android-APK
+          path: dist/OpenJarvis-Android.apk
+          retention-days: 30
